@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/agregar-donacion.css') }}">
+    <title>Agregar-pedido</title>
+</head>
+<body>
+  <div style="display: block;" id="seccion_form">
+    {% if not confirmacion %}
+    <h1>Formulario Pedido</h1><br>
+    {% endif %}
+    {% if error %}
+      <div class="error-message">
+          {{ error }}
+      </div>
+    {% endif %}
+    <div>
+      {% if not confirmacion %}
+      <form action="agregar-pedido" method="POST" id="pedido_form">
+
+        <label>Región:</label>
+        <select id="region" name="region" required>
+            <option value="">Selecciona una Región</option>
+        </select>
+        <br><br>
+        <label>Comuna:</label>
+        <select id="comuna" name="comuna" required>
+            <option value="">Selecciona una Comuna</option>
+        </select>
+        <br><br>
+    
+        <label for="tipo">Tipo de pedido:</label>
+        <select id="tipo" name="tipo" required>
+            <option value="">Selecciona una opción</option>
+            <option value="fruta">Fruta</option>
+            <option value="verdura">Verdura</option>
+            <option value="otro">Otro</option>
+        </select><br><br>
+    
+        <label for="descripcion">Descripción del pedido:</label>
+        <textarea id="descripcion" name="descripcion" rows="1" cols="80" required></textarea><br><br>
+    
+        <label for="cantidad">Cantidad:</label>
+        <textarea id="cantidad" name="cantidad" rows="1" cols="10" required></textarea><br><br>
+    
+        <label for="nombre">Nombre del solicitante:</label>
+        <textarea id="nombre" name="nombre" rows="1" cols="80" required></textarea><br><br>
+    
+        <label for="email">Email del solicitante:</label>
+        <textarea id="email" name="email" rows="1" cols="30" required></textarea><br><br>
+    
+        <label for="celular">Número de celular del solicitante:</label>
+        <textarea id="celular" name="celular" rows="1" cols="15"></textarea><br><br>
+    
+        <button type="button" id="confirmarBtn">Agregar pedido</button>
+    </form>
+    {% endif %}
+    </div>
+
+  </div>  
+    
+
+    <div class="confirmacion" id="confirmacion" style="display: none;">
+          <p id="confirmacionTexto">¿Confirma que desea agregar este pedido?</p>
+          <div id="confirmacionBotones">
+            <button type="submit" form="pedido_form" id="confirmadisimo" class="inline-button">Sí, confirmo</button>
+            <button id="volverBtn" class="inline-button">No, quiero volver al formulario</button>
+          </div> 
+    </div>
+
+    {% if confirmacion %}
+    <div class="exito-container">
+      <p>Hemos recibido la información de su pedido. Muchas gracias.</p>
+      <a id="btn_inicio" href="{{ url_for('inicio') }}">Volver al inicio</a>
+    </div>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/regiones.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/region_comuna.json') }}"></script>
+    <script src="{{ url_for('static', filename='js/validar-pedido.js') }}"></script>
+</body>
+</html>

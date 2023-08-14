@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/inicio.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <title>Inicio</title>
+</head>
+<body>
+    <nav id="barra-inicio">
+        <ul>
+          <li><a href="{{ url_for('agregar_donacion') }}">Agregar Donación</a></li>
+          <li><a href="{{ url_for('agregar_pedido') }}">Agregar Pedido</a></li>
+          <li><a href="{{ url_for('ver_donaciones', pagina=1) }}">Ver Donaciones</a></li>
+          <li><a href="{{ url_for('ver_pedidos', pagina=1) }}">Ver Pedidos</a></li>
+          <!-- Agrega estadisticas a la nav bar-->
+          <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
+        </ul>
+    </nav>
+
+    <h1>Donación de Frutas y Verduras</h1>
+
+    <div id="map"></div>
+
+    <p>En esta página podrás realizar tus donaciones de frutas y verduras para evitar que sean desperdiciadas. También puedes solicitar una petición sobre qué frutas y verduras te gustaría recibir.</p>
+
+    <!-- Estos scripts son para el mapa-->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Esto es mala practica, pero agregue el codigo que muestra el mapa aca, ve si te sale separarlo-->
+    <!-- De nuevo, chat gpt asi que copialo igual si quieres -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Crea el mapa y lo asigna al contenedor 'map'
+            var map = L.map('map').setView([-33.457, -70.6], 12);
+            map.setMinZoom(3);
+
+            // Agrega la capa del mapa de OpenStreetMap
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
+            }).addTo(map);
+
+            // Diccionario para almacenar los marcadores según las coordenadas
+            // esto sirve pa ver cuando se juntan 2 donaciones/pedidos en la misma columna
+            var markersDict = {};
+
+            // Función para crear los marcadores
+            function createMarkers(data, iconColor, nombre) {
+                for (var i = 0; i < data.length; i++) {
+                    var markerData = data[i];
+                    var coordinates = markerData.coordinates;
+                    var items = markerData.items;
+
+                    if (coordinates in markersDict) {
+                        // Si las coordenadas ya existen en el diccionario, utilizamos el marcador existente
+                        var marker = markersDict[coordinates];
+                        var popup = marker.getPopup();
+                        var currentContent = popup.getContent();
+
+                        var newContent = currentContent + '<br/><h2>' + nombre + '</h2>';
+                        for (var j = 0; j < items.length; j++) {
+                            var item = items[j];
+                            newContent += '<li>' + item.label + ': ' + item.value + '</li>';
+                        }
+
+                        popup.setContent(newContent);
+                    } else {
+                        // Si las coordenadas no existen en el diccionario, creamos un nuevo marcador
+                        var marker = L.marker(coordinates, {
+                            icon: L.icon({
+                                iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-' + iconColor + '.png',
+                                alt: 'foto',
+                                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0/images/marker-shadow.png',
+                                iconSize: [25, 41],
+                                iconAnchor: [12, 41],
+                                popupAnchor: [1, -34],
+                                shadowSize: [41, 41]
+                            })
+                        }).addTo(map);
+
+                        markersDict[coordinates] = marker; // Agregamos el marcador al diccionario
+
+                        var popupContent = '<h2>' + nombre + '</h2>';
+                        for (var j = 0; j < items.length; j++) {
+                            var item = items[j];
+                            popupContent += '<li>' + item.label + ': ' + item.value + '</li>';
+                        }
+
+                        marker.bindPopup(popupContent, { role: 'dialog' });
+                    }
+                }
+            }
+
+            // Función para obtener los datos del marcador desde el servidor
+            function getMarkerData(url, iconColor, nombre) {
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        createMarkers(data, iconColor, nombre);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+            // Llama a la función para obtener los datos de los marcadores de donaciones
+            getMarkerData("{{ url_for('mapa_donaciones') }}", "green", "Donación");
+
+            // Llama a la función para obtener los datos de los marcadores de pedidos
+            getMarkerData("{{ url_for('mapa_pedidos') }}", "blue", "Pedido");
+        });
+    </script>
+</body>
+</html>

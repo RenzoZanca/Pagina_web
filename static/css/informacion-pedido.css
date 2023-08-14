@@ -1,0 +1,43 @@
+body {
+    font-family: "Times New Roman", Times, serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    font-size: 30px;
+    margin: 2rem 0;
+    text-align: center;
+  }
+  
+  ul {
+    list-style-position: inside;
+    text-align: center;
+  }
+  
+  ul li {
+    margin-bottom: 10px;
+  }
+  
+  ul li strong {
+    font-weight: bold;
+  }
+
+  .boton-volver {
+    text-align: center;
+  }
+
+  .boton-volver a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .boton-volver a:hover {
+    background-color: #3e8e41;
+  }
+  

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tabla de donaciones</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/ver-donaciones.css') }}">
+</head>
+<body>
+	<h1>Pedidos</h1><br>
+	<table>
+		<thead>
+			<tr>
+				<th>Comuna</th>
+				<th>Tipo</th>
+				<th>Descripción</th>
+				<th>Cantidad</th>
+				<th>Nombre solicitante</th>
+				<th></th>
+			</tr>
+		</thead>
+
+<tbody>
+    {% for i in range(pedidos|length) %}
+        {% set pedido = pedidos[i] %}
+        {% set comuna = comunas[i][0][0] %}
+        <tr>
+            <td>{{ comuna }}</td>
+            <td>{{ pedido[2] }}</td>
+            <td>{{ pedido[3] }}</td>
+            <td>{{ pedido[4] }}</td>
+            <td>{{ pedido[5] }}</td>
+            <td><a href="{{ url_for('informacion_pedido', pedido_id=pedido[0]) }}" class="boton-ver-mas">Ver mas</a></td>
+        </tr>
+    {% endfor %}
+</tbody>
+		
+	</table><br>
+
+    <div class="container">
+        {% if p != 1 %}
+        {% for num in range(p) %}
+        <a href="{{ url_for('ver_pedidos', pagina=num+1, p=p) }}">{{ num + 1 }}</a>
+        {% endfor %}
+        {% endif %}
+      </div>
+
+    
+    <div class="boton-volver">
+        <a href="{{ url_for('inicio') }}">Volver al inicio</a>
+    </div><br>
+</body>
+</html>

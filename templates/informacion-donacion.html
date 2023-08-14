@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información de Donación</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/informacion-donacion.css') }}">
+</head>
+<body>
+    <h1>Información de Donación</h1>
+    <ul>
+      <li><strong>Región:</strong> {{ region[0][0] }}</li>
+      <li><strong>Comuna:</strong> {{ comuna[0][0] }}</li>
+      <li><strong>Dirección:</strong> {{ donacion[0][2] }}</li>
+      <li><strong>Tipo de Donación:</strong> {{ donacion[0][3] }}</li>
+      <li><strong>Cantidad:</strong> {{ donacion[0][4] }}</li>
+      <li><strong>Fecha de Disponibilidad:</strong> {{ donacion[0][5].strftime('%Y-%m-%d') }}</li>
+      <li><strong>Descripción:</strong> {{ donacion[0][6] }}</li>
+      <li><strong>Condiciones:</strong> {{ donacion[0][7] }}</li>
+    </ul><br>
+    {% for nombre in nombres_fotos %}
+    <div class="image-container">
+      <img src="{{ url_for('static', filename='uploads/' ~ nombre) }}" alt="Imagen 640x480" id="imagen">
+    </div><br><br>
+    {% endfor %}
+    <ul>
+      <li><strong>Nombre del Donante:</strong> {{ donacion[0][8] }}</li>
+      <li><strong>Email del Donante:</strong> {{ donacion[0][9] }}</li>
+      <li><strong>Número de Teléfono:</strong> {{ donacion[0][10] }}</li>
+    </ul><br>
+
+    <div class="boton-volver">
+      <a href="{{ url_for('ver_donaciones', pagina=1) }}">Volver a donaciones</a>
+  </div><br><br>
+
+  <script>
+    const imagen = document.querySelector('#imagen');
+    imagen.addEventListener('click', () => {
+      imagen.classList.toggle('ampliada');
+    });
+  </script>
+</body>
+</html>

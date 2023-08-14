@@ -1,0 +1,84 @@
+body {
+  font-family: "Times New Roman", Times, serif;
+}
+
+/* Estilos para la tabla */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  /* Estilos para la imagen de la columna "Foto" */
+  td img {
+    display: block;
+    max-width: 100%;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+  }
+  
+  /* Estilos para el encabezado */
+  h1 {
+    font-size: 36px;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+
+  .boton-volver {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .boton-volver a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 18px;
+  }
+  
+  .boton-volver a:hover {
+    background-color: #3e8e41;
+  }
+
+  .boton-ver-mas {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .boton-ver-mas:hover {
+    background-color: #0069d9;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5vh;
+  }
+  
+  a {
+    color: blue;
+    text-decoration: underline;
+    margin: 0 5px; /* Agrega separación horizontal de 5px */
+  }
+

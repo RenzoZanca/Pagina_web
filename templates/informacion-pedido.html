@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informacion-de-Pedido</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/informacion-pedido.css') }}">
+</head>
+<body>
+  <h1>Información de Pedido</h1><br>
+  <ul>
+    <li><strong>Región:</strong> <span id="region">{{ region[0][0] }}</span></li>
+    <li><strong>Comuna:</strong> <span id="comuna">{{ comuna[0][0] }}</span></li>
+    <li><strong>Tipo de Pedido:</strong> <span id="tipo">{{ pedido[0][2] }}</span></li>
+    <li><strong>Descripción:</strong> <span id="descripcion">{{ pedido[0][3] }}</span></li>
+    <li><strong>Cantidad:</strong> <span id="cantidad">{{ pedido[0][4] }}</span></li>
+    <li><strong>Nombre del Solicitante:</strong> <span id="nombre">{{ pedido[0][5] }}</span></li>
+    <li><strong>Email del Solicitante:</strong> <span id="email">{{ pedido[0][6] }}</span></li>
+    <li><strong>Número de Celular:</strong> <span id="celular">{{ pedido[0][7] }}</span></li>
+  </ul><br><br><br>
+
+<div class="boton-volver">
+    <a href="{{ url_for('ver_pedidos', pagina=1) }}">Volver a pedidos</a>
+</div><br>
+</body>
+</html>
+

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/agregar-donacion.css') }}">
+    <title>Agregar-donacion</title>
+</head>
+<body>
+  <div style="display: block;" id="seccion_form">
+    {% if not confirmacion %}
+    <h1>Formulario Donación</h1><br>
+    {% endif %}
+    {% if error %}
+      <div class="error-message">
+          {{ error }}
+      </div>
+    {% endif %}
+    <div>
+      {% if not confirmacion %}
+      <form action="agregar-donacion" method="POST" id="donacion_form" enctype="multipart/form-data">
+        <label>Región:</label>
+        <select id="region" name="region" required>
+          <option value="">Selecciona una Región</option>
+        </select>
+        <br><br>
+        <label>Comuna:</label>
+        <select id="comuna" name="comuna" required>
+          <option value="">Selecciona una Comuna</option>
+        </select>
+        <br><br>
+    
+        <label for="calle-numero">Calle y número:</label>
+        <textarea id="calle-numero" name="calle-numero" rows="1" cols="80" required></textarea><br><br>
+      
+        <label for="tipo">Tipo de donación:</label>
+        <select id="tipo" name="tipo" required>
+          <option value="">Selecciona una opción</option>
+          <option value="fruta">Fruta</option>
+          <option value="verdura">Verdura</option>
+          <option value="otro">Otro</option>
+        </select><br><br>
+      
+        <label for="cantidad">Cantidad:</label>
+        <textarea id="cantidad" name="cantidad" rows="1" cols="10" required></textarea><br><br>
+      
+        <label for="fecha-disponibilidad">Fecha de disponibilidad:</label>
+        <input type="date" id="fecha-disponibilidad" name="fecha-disponibilidad" required><br><br>
+      
+        <label for="descripcion">Descripción de la donación:</label>
+        <textarea id="descripcion" name="descripcion" rows="1" cols="80"></textarea><br><br>
+      
+        <label for="condiciones">Condiciones para retirar:</label>
+        <textarea id="condiciones" name="condiciones" rows="1" cols="80"></textarea><br><br>
+      
+        <label for="foto">Fotos de la donación (mínimo 1 y máximo 3):</label><br>
+        <input type="file" name="foto" id="foto" accept="image/*,.pdf" onchange="mostrarBotones()" required><br>
+        <ul id="foto-list"></ul>
+        
+        <div id="botones-foto" style="display:none">
+          <label id="label-foto2" for="foto2" class="foto-button" style="display:none;"></label>
+          <input type="file" name="foto2" id="foto2" accept="image/*,.pdf" class="foto-button" style="display:none;"><br>
+          <label id="label-foto3" for="foto3" class="foto-button" style="display:none;"></label>
+          <input type="file" name="foto3" id="foto3" accept="image/*,.pdf" class="foto-button" style="display:none;"><br>
+        </div>
+        
+        <script>
+        var currentPhoto = 2;
+        
+        function mostrarBotones() {
+          var fotoInput = document.getElementById("foto");
+          var botonesDiv = document.getElementById("botones-foto");
+          if (fotoInput.files.length > 0) {
+            botonesDiv.style.display = "block";
+            document.getElementById("label-foto2").style.display = "block";
+            document.getElementById("foto2").style.display = "block";
+          } else {
+            botonesDiv.style.display = "none";
+            document.getElementById("label-foto2").style.display = "none";
+            document.getElementById("foto2").style.display = "none";
+            document.getElementById("label-foto3").style.display = "none";
+            document.getElementById("foto3").style.display = "none";
+            currentPhoto = 2;
+          }
+        }
+        
+        document.getElementById("foto2").addEventListener("change", function() {
+          if (this.files.length > 0) {
+            document.getElementById("label-foto3").style.display = "block";
+            document.getElementById("foto3").style.display = "block";
+            currentPhoto = 3;
+          } else {
+            document.getElementById("label-foto3").style.display = "none";
+            document.getElementById("foto3").style.display = "none";
+            currentPhoto = 2;
+          }
+        });
+        
+        document.getElementById("foto3").addEventListener("change", function() {
+          if (this.files.length == 0) {
+            document.getElementById("label-foto3").style.display = "none";
+            document.getElementById("foto3").style.display = "none";
+            currentPhoto = 2;
+          }
+        });
+        </script>
+      
+        <label for="nombre">Nombre del donante:</label>
+        <textarea id="nombre" name="nombre" rows="1" cols="80" required></textarea><br><br>
+      
+        <label for="email">Email de contacto:</label>
+        <textarea id="email" name="email" rows="1" cols="30" required></textarea><br><br>
+      
+        <label for="celular">Número de celular de contacto:</label>
+        <textarea id="celular" name="celular" rows="1" cols="15"></textarea><br><br>
+      
+        <button type="button" id="confirmarBtn">Agregar donación</button>
+
+      </form>
+      {% endif %}
+    </div>
+
+  </div>  
+    
+
+    <div class="confirmacion" id="confirmacion" style="display: none;">
+          <p id="confirmacionTexto">¿Confirma que desea agregar esta donación?</p>
+          <div id="confirmacionBotones">
+            <button type="submit" form="donacion_form" id="confirmadisimo" class="inline-button">Sí, confirmo</button>
+            <button id="volverBtn" class="inline-button">No, quiero volver al formulario</button>
+          </div> 
+    </div>
+
+    {% if confirmacion %}
+    <div class="exito-container">
+      <p>Hemos recibido la información de su donación. Muchas gracias.</p>
+      <a id="btn_inicio" href="{{ url_for('inicio') }}">Volver al inicio</a>
+    </div>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/regiones.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/region_comuna.json') }}"></script>
+    <script src="{{ url_for('static', filename='js/validar-donacion.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.pie.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estadisticas.css') }}">
+</head>
+<body>
+    <!-- Esto es nuevo, es agregar unos divs pa mostrar los graficos--> 
+    <h1>Estadísticas</h1>
+    <div id="g1">
+        <h2>Tipos de donaciones</h2>
+        <div id="chart-container"></div>
+    </div>
+
+    <div id="g2">
+        <h2>Tipos de pedidos</h2>
+        <div id="chart-container2"></div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/graficos.js') }}"></script>
+
+    <div class="boton-volver">
+        <a href="{{ url_for('inicio') }}">Volver al inicio</a>
+    </div><br>
+</body>
+</html>

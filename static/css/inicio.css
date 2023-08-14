@@ -1,0 +1,68 @@
+/* Estilos para el menú de navegación */
+#barra-inicio {
+  background-color: #333; /* Cambiar el color de fondo */
+  color: #fff; /* Cambiar el color de texto */
+  display: flex; /* Hacer que los elementos floten en línea */
+  justify-content: space-around; /* Alinear los elementos a ambos lados */
+  padding: 10px; /* Añadir un poco de espacio alrededor */
+}
+
+#barra-inicio ul {
+  list-style-type: none; /* Quitar los puntos de lista */
+  margin: 0;
+  padding: 0;
+}
+
+#barra-inicio li {
+  display: inline-block; /* Hacer que los elementos floten en línea */
+  margin-right: 20px; /* Añadir un poco de espacio a la derecha */
+}
+
+#barra-inicio a {
+  color: #fff; /* Cambiar el color de texto */
+  text-decoration: none; /* Quitar subrayado */
+  padding: 10px; /* Añadir un poco de espacio alrededor */
+  border-radius: 5px; /* Añadir bordes redondeados */
+}
+
+#barra-inicio a:hover {
+  background-color: #fff; /* Cambiar el color de fondo en el hover */
+  color: #333; /* Cambiar el color de texto en el hover */
+}
+
+/* Estilos para el encabezado principal */
+h1 {
+  font-size: 50px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* Estilos para la imagen */
+img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Estilos para el párrafo */
+p {
+  font-size: 20px;
+  text-align: justify;
+  margin: 50px;
+  margin-left: 150px;
+  margin-right: 150px;
+}
+
+/* Estilos para todos los elementos */
+body {
+  font-family: "Times New Roman", Times, serif;
+}
+
+
+/* estilo pal mapa */
+#map {
+  height: 500px;
+  margin-left: 150px;
+  margin-right: 150px;
+}

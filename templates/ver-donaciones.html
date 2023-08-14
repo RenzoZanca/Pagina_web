@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Ver-donaciones</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/ver-donaciones.css') }}">
+</head>
+<body>
+	<h1>Donaciones</h1><br>
+	<table>
+		<thead>
+			<tr>
+				<th>Comuna</th>
+				<th>Tipo</th>
+				<th>Cantidad</th>
+				<th>Fecha</th>
+				<th>Nombre</th>
+				<th>Foto</th>
+                <th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in range(donaciones|length) %}
+				{% set donacion = donaciones[i] %}
+				{% set comuna = comunas[i][0][0] %}
+			<tr>
+				<td>{{ comuna }}</td>
+				<td>{{ donacion[3] }}</td>
+				<td>{{ donacion[4] }}</td>
+				<td>{{ donacion[5].strftime('%Y-%m-%d') }}</td>
+				<td>{{ donacion[8] }}</td>
+				
+                <td><img src="{{ url_for('static', filename='uploads/' ~ fotos[i][0][2]) }}" alt="Foto de la donación"></td>
+                {% if fotos[i][1] and fotos[i][2] %}
+				<td><a href="{{ url_for('informacion_donacion', donacion_id=donacion[0], foto_id1=fotos[i][0][0], foto_id2=fotos[i][1][0], foto_id3=fotos[i][2][0]) }}" class="boton-ver-mas">Ver más</a></td>
+				{% elif fotos[i][1] %}
+				<td><a href="{{ url_for('informacion_donacion', donacion_id=donacion[0], foto_id1=fotos[i][0][0], foto_id2=fotos[i][1][0], foto_id3=0) }}" class="boton-ver-mas">Ver más</a></td>
+				{% else %}
+				<td><a href="{{ url_for('informacion_donacion', donacion_id=donacion[0], foto_id1=fotos[i][0][0], foto_id2=0, foto_id3=0) }}" class="boton-ver-mas">Ver más</a></td>
+				{% endif %}
+            </tr>
+			{% endfor %}
+		</tbody>
+	</table><br>
+
+	<div class="container">
+		{% if p != 1 %}
+        {% for num in range(p) %}
+        <a href="{{ url_for('ver_donaciones', pagina=num+1, p=p) }}">{{ num + 1 }}</a>
+        {% endfor %}
+		{% endif %}
+      </div>
+
+	<div class="boton-volver">
+		<a href="{{ url_for('inicio') }}">Volver al inicio</a>
+	</div><br>
+      
+</body>
+</html>
